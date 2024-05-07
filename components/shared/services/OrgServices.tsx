@@ -107,7 +107,7 @@ const OrgServices = () => {
       console.log(myOrganization);
 
       if (myOrganization) {
-        if (myOrganization.orgCategory != "663329c562ec4370f76a871c") {
+        if (myOrganization.orgCategory != "6639d49c3215cb4cf09e89d0") {
           setApproved(myOrganization.approvalStatus);
         } else {
           setApproved("Approved");
@@ -143,7 +143,7 @@ const OrgServices = () => {
 
   return (
     <div>
-      {Approved == "Pending" ? (
+      {Approved == "Pending"  ? (
         <div>
           <ApprovalForm ordId={usertoken} />
         </div>
@@ -284,12 +284,6 @@ const OrgServices = () => {
               })}
             </div>
           )}
-
-          {/* {
-            services.map((curr : any)=>{
-              return <h1>{curr.name}</h1>
-            })
-          } */}
         </div>
       )}
     </div>

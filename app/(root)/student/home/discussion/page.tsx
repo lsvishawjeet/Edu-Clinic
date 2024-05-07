@@ -14,7 +14,7 @@ const page = async () => {
   const fetchUserData = async (studentId: UpdateStudentParams) => {
     return await getStudentDataById(studentId);
   };
-  
+
   return (
     <div>
       <StudentNav />
@@ -24,7 +24,7 @@ const page = async () => {
             <h1 className="text-zinc-900 font-semibold text-2xl">
               Discussion Pannel
             </h1>
-            <p >You can discuss whatever query you have</p>
+            <p>You can discuss whatever query you have</p>
           </div>
           <div className="h-10  py-2 px-2 bg-zinc-900 rounded-md flex justify-center items-center gap-1">
             <Plus className="text-zinc-200" />
@@ -33,8 +33,8 @@ const page = async () => {
         </div>
 
         <div>
-          {discussReponse.map(async(curr: any) => {
-            const userData = await fetchUserData(curr.user._id)
+          {discussReponse.map(async (curr: any) => {
+            const userData = await fetchUserData(curr.user._id);
             return (
               <Link href={`/student/home/discussion/${curr._id}`}>
                 <div className=" pb-5 w-full border-b hover:bg-slate-100 cursor-pointer">
@@ -50,9 +50,7 @@ const page = async () => {
                     {curr.message}
                   </div>
                   <div className="flex justify-end md:mr-14">
-                    <p className="text-sm text-indigo-400">
-                      {userData.name}
-                    </p>
+                    <p className="text-sm text-indigo-400">{userData.name}</p>
                   </div>
                 </div>
               </Link>
