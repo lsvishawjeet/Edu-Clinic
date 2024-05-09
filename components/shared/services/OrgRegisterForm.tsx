@@ -101,7 +101,7 @@ const OrgRegisterForm = () => {
                     <div className="h-10 w-12 bg-zinc-100 rounded-sm flex items-center justify-center">
                         <Mail className="text-yellow-400" size={20}/>
                 </div>
-                    <Input type="email" placeholder="Your email addrerss" {...field} />
+                    <Input type="email" placeholder="Your email address" {...field} />
                     </div>
                   </FormControl>
                  
