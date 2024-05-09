@@ -53,7 +53,8 @@ const OrgServices = () => {
 
   let usertoken = "";
 
-  const handleService = () => {
+  const handleService = async(e:any) => {
+    e.preventDefault();
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("x-auth-token");
       if (token) {
@@ -61,7 +62,7 @@ const OrgServices = () => {
       }
     }
 
-    createService({
+    await createService({
       service: {
         serviceName: ServiceCategoryName,
         serviceCategory: ServiceCategory,
@@ -69,6 +70,8 @@ const OrgServices = () => {
       userToken: usertoken,
     }).then((res) => {
       console.log("Service Created: ", res);
+      alert(`Service is successfully created, Please refresh the page`)
+      setOpen(false)
     });
   };
 
@@ -107,7 +110,6 @@ const OrgServices = () => {
       console.log(myOrganization);
 
       if (myOrganization) {
-        console.log(myOrganization)
         if (myOrganization.orgCategory != "6639d49c3215cb4cf09e89d0") {
           setApproved(myOrganization.approvalStatus);
         } else {
@@ -119,6 +121,8 @@ const OrgServices = () => {
     getMyorg();
     getUserServ();
   }, []);
+
+  
 
   if (Approved == "Applied") {
     return (
@@ -164,7 +168,7 @@ const OrgServices = () => {
                 <Plus/>
                 
             </Button> */}
-              <AlertDialog>
+              <AlertDialog open={open} onOpenChange={setOpen}>
                 <AlertDialogTrigger className="pt-2 pb-2 pl-2 text-sm">
                   <div className="flex items-center gap-2 ml-2 ">
                     <Plus size={16} />
@@ -172,19 +176,19 @@ const OrgServices = () => {
                   </div>
                 </AlertDialogTrigger>
                 <AlertDialogContent className="w-full">
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Add Service</AlertDialogTitle>
+                  <form onSubmit={handleService}>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Add Service</AlertDialogTitle>
+                    
                     <AlertDialogDescription>
                       <Input
                         type="text"
-                        onChange={(e) => {
-                          setServiceCategoryName(e.target.value);
-                        }}
-                        placeholder="New category"
+                        value={ServiceCategoryName}
+                        onChange={(e) => setServiceCategoryName(e.target.value)}
+                        placeholder="Service Name"
                       />
                       <div className="h-3 w-full"></div>
-                      {/* service category  */}
-
+                      {/* Service category */}
                       <Select
                         onValueChange={(value) => {
                           setServiceCategory(value);
@@ -195,62 +199,28 @@ const OrgServices = () => {
                           <SelectValue placeholder="Category" />
                         </SelectTrigger>
                         <SelectContent>
-                          {category.length < 1 ? (
-                            <div></div>
-                          ) : (
-                            category.map((curr) => {
-                              return (
-                                <SelectItem key={curr._id} value={curr._id}>
-                                  {" "}
-                                  {curr.name}
-                                </SelectItem>
-                              );
-                            })
-                          )}
-                          <AlertDialog>
-                            <AlertDialogTrigger className="pt-2 pb-2 pl-7 text-sm">
-                              Add New Category
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                              <AlertDialogHeader>
-                                <AlertDialogTitle>
-                                  Add New Custom category
-                                </AlertDialogTitle>
-                                <AlertDialogDescription>
-                                  <Input
-                                    type="text"
-                                    onChange={(e) => {
-                                      setnewcategory(e.target.value);
-                                    }}
-                                    placeholder="New category"
-                                  />
-                                </AlertDialogDescription>
-                              </AlertDialogHeader>
-                              <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction
-                                  onClick={() => startTransition(handleService)}
-                                >
-                                  Submit
-                                </AlertDialogAction>
-                              </AlertDialogFooter>
-                            </AlertDialogContent>
-                          </AlertDialog>
+                          {category.map((curr) => (
+                            <SelectItem key={curr._id} value={curr._id}>
+                              {curr.name}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
-                      {/* service category end  */}
+                      {/* Service category end */}
                     </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction
-                      onClick={() => {
-                        startTransition(handleService);
-                      }}
-                    >
-                      Submit
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
+                    </AlertDialogHeader>
+                    {/* <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction type="submit">
+                        Submit
+                      </AlertDialogAction>
+                    </AlertDialogFooter> */}
+                    <div className="mt-2 flex justify-end items-end ">
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+
+                      <Button className="ml-2" type="submit">Submit</Button>
+                      </div>
+                  </form>
                 </AlertDialogContent>
               </AlertDialog>
             </div>
